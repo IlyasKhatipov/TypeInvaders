@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoresTextField;
     public TextMeshProUGUI bestScoresField;
     public TextMeshProUGUI bestScoresAmount;
+    public GameObject TutorCanvas;
     private float timeSinceLastSpawn = 0f;
     private int currentScores = 0;
 
@@ -20,8 +21,7 @@ public class GameManager : MonoBehaviour
         LoseCanvas.SetActive(false);
         bestScoresField.gameObject.SetActive(false);
         bestScoresAmount.gameObject.SetActive(false);
-        scoresTextField.text = "Scores: " + currentScores.ToString();
-
+        PauseGame();
     }
     void Update()
     {
@@ -68,5 +68,20 @@ public class GameManager : MonoBehaviour
             bestScoresAmount.text = currentScores.ToString();
         }
         SaveBestScores();
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        TutorCanvas.SetActive(true);
+        scoresTextField.gameObject.SetActive(false);
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+        TutorCanvas.SetActive(false);
+        scoresTextField.gameObject.SetActive(true);
+        scoresTextField.text = "Scores: " + currentScores.ToString();
     }
 }
